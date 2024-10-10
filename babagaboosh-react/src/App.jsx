@@ -8,6 +8,9 @@ import {
 
 import { Button, Flex, Input, Spin } from "antd";
 import { chatHistory } from "./chatHistory";
+import { systemMessage } from "./systemMessage";
+import { conversationMemory } from "./conversationMemory";
+import { createOptions } from "./createOptions";
 const { TextArea } = Input;
 
 const App = () => {
@@ -15,14 +18,35 @@ const App = () => {
     const [apiKeyPPLX, setApiKeyPPLX] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const submitNewInput = () => {
+    const submitNewInput = async () => {
         if (input) {
             setIsLoading(true);
-
             console.log(input);
 
-            setInput("");
+            const options = createOptions(apiKeyPPLX, input);
+            console.log("options >>", options);
 
+            if (true) {
+                try {
+                    const res = await fetch(
+                        "https://api.perplexity.ai/chat/completions",
+                        options
+                    );
+                    const resJson = await res.json();
+                    console.log("RES >>", resJson);
+
+                    const messageContent = resJson.choices[0].message.content;
+                    console.log("ANS >>", messageContent);
+                } catch (error) {
+                    console.log("ERROR >>", error);
+                }
+
+                // document.getElementById("output").textContent = messageContent;
+                // ttsTest(messageContent);
+                // .catch((err) => console.error(err));
+            }
+
+            setInput("");
             setIsLoading(false);
         }
     };
@@ -74,7 +98,7 @@ const App = () => {
                                 justify="center"
                                 align="center"
                             >
-                                Chat With Raily
+                                Chat With Sam
                             </Flex>
 
                             <MessageList

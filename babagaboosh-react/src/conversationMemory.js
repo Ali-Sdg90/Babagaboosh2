@@ -1,4 +1,4 @@
-const hi = [
+export const conversationMemory = [
     {
         role: "user",
         content:
