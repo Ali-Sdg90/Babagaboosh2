@@ -1,12 +1,19 @@
+/**
+ * Function to handle the submission of the user's query.
+ * It fetches the API key from the config file, constructs the request options,
+ * sends the request to the API, and handles the response.
+ */
 function submitQuery() {
+    // Get the user input from the input field
     const userInput = document.getElementById("userInput").value;
 
+    // Fetch the API key from the config file
     fetch("../config/config.json")
         .then((response) => response.json())
         .then((config) => {
             const apiKey = config.apiKey;
-            // console.log("API Key:", apiKey);
 
+            // Construct the request options
             const options = {
                 method: "POST",
                 headers: {
@@ -41,15 +48,18 @@ function submitQuery() {
                 }),
             };
 
+            // Send the request to the API
             fetch("https://api.perplexity.ai/chat/completions", options)
                 .then((response) => response.json())
                 .then((response) => {
+                    // Handle the API response
                     console.log("RES >>", response);
 
                     const messageContent = response.choices[0].message.content;
 
                     console.log("ANS >>", messageContent);
 
+                    // Display the response message content in the output element
                     document.getElementById("output").textContent =
                         messageContent;
                 })
