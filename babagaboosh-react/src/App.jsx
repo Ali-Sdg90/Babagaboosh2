@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
     MinChatUiProvider,
     MainContainer,
@@ -8,43 +8,73 @@ import {
 
 import { Button, Flex, Input, Spin } from "antd";
 import { chatHistory } from "./chatHistory";
-import { systemMessage } from "./systemMessage";
 import { conversationMemory } from "./conversationMemory";
 import { createOptions } from "./createOptions";
+import { marked } from "marked";
+
 const { TextArea } = Input;
 
 const App = () => {
     const [input, setInput] = useState("");
     const [apiKeyPPLX, setApiKeyPPLX] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const messageListRef = useRef(null); 
 
     const submitNewInput = async () => {
         if (input) {
             setIsLoading(true);
             console.log(input);
 
+            conversationMemory.splice(0, 2);
+
+            conversationMemory.push({
+                role: "user",
+                content: input,
+            });
+
+            chatHistory.push({
+                id: new Date().getTime(),
+                text: input,
+                user: {
+                    id: "user",
+                    name: "You",
+                },
+            });
+
             const options = createOptions(apiKeyPPLX, input);
             console.log("options >>", options);
 
-            if (true) {
-                try {
-                    const res = await fetch(
-                        "https://api.perplexity.ai/chat/completions",
-                        options
-                    );
-                    const resJson = await res.json();
-                    console.log("RES >>", resJson);
+            try {
+                const res = await fetch(
+                    "https://api.perplexity.ai/chat/completions",
+                    options
+                );
+                const resJson = await res.json();
+                console.log("RES >>", resJson);
 
-                    const messageContent = resJson.choices[0].message.content;
-                    console.log("ANS >>", messageContent);
-                } catch (error) {
-                    console.log("ERROR >>", error);
-                }
+                const messageContent = resJson.choices[0].message.content;
+                console.log("ANS >>", messageContent);
 
-                // document.getElementById("output").textContent = messageContent;
-                // ttsTest(messageContent);
-                // .catch((err) => console.error(err));
+                conversationMemory.push({
+                    role: "assistant",
+                    content: messageContent,
+                });
+
+                chatHistory.push({
+                    id: new Date().getTime(),
+                    // text: `<pre>${messageContent}</pre>`,
+                    text: marked(messageContent),
+                    user: {
+                        id: "sam",
+                        name: "Pajama Sam",
+                        avatar: "./Pajama_Sam.webp",
+                    },
+                });
+            } catch (error) {
+                console.log("ERROR >>", error);
             }
+
+            // console.log("conversationMemory >>", conversationMemory);
 
             setInput("");
             setIsLoading(false);
@@ -87,6 +117,16 @@ const App = () => {
         getApiKey();
     }, []);
 
+    // need work...
+    useEffect(() => {
+        const element = document.querySelector(".fpeuA-D");
+        console.log(element);
+
+        if (element) {
+            element.scrollTop = element.scrollHeight;
+        }
+    }, [chatHistory]);
+
     return (
         <>
             {apiKeyPPLX ? (
@@ -98,13 +138,13 @@ const App = () => {
                                 justify="center"
                                 align="center"
                             >
-                                Chat With Sam
+                                Chat With Pajama Sam
                             </Flex>
 
                             <MessageList
                                 className="chat-list"
                                 messages={chatHistory}
-                                currentUserId="user1"
+                                currentUserId="user"
                             />
 
                             <Flex
