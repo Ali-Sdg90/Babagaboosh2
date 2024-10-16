@@ -18,14 +18,16 @@ const App = () => {
     const [input, setInput] = useState("");
     const [apiKeyPPLX, setApiKeyPPLX] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const messageListRef = useRef(null); 
+    const messageListRef = useRef(null);
 
     const submitNewInput = async () => {
         if (input) {
             setIsLoading(true);
             console.log(input);
 
-            conversationMemory.splice(0, 2);
+            if (conversationMemory.length > 18) {
+                conversationMemory.splice(0, 2);
+            }
 
             conversationMemory.push({
                 role: "user",
