@@ -53,8 +53,10 @@ const App = () => {
                 const resJson = await res.json();
                 console.log("RES >>", resJson);
 
-                const messageContent = resJson.choices[0].message.content;
+                let messageContent = resJson.choices[0].message.content;
                 console.log("ANS >>", messageContent);
+
+                messageContent = messageContent.replace(/\[\d+\]/g, "");
 
                 conversationMemory.push({
                     role: "assistant",
@@ -126,7 +128,7 @@ const App = () => {
                 behavior: "smooth",
             });
 
-            inputRef.current.focus()
+            inputRef.current.focus();
 
             // elements[elements.length - 1].style.border = "1px solid blue";
         }

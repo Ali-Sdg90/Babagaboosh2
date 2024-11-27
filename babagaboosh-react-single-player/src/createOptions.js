@@ -1,6 +1,20 @@
 import { conversationMemory } from "./conversationMemory";
 import { systemMessage } from "./systemMessage";
 
+const createMessage = () => {
+    const message = [
+        {
+            role: "system",
+            content: systemMessage,
+        },
+        ...conversationMemory,
+    ];
+
+    console.log(message);
+
+    return message;
+};
+
 export const createOptions = (apiKeyPPLX, input) => {
     return {
         method: "POST",
@@ -10,13 +24,7 @@ export const createOptions = (apiKeyPPLX, input) => {
         },
         body: JSON.stringify({
             model: "llama-3.1-sonar-small-128k-online",
-            messages: [
-                {
-                    role: "system",
-                    content: systemMessage,
-                },
-                ...conversationMemory,
-            ],
+            messages: createMessage(),
             temperature: 0.7,
             top_p: 0.7,
             return_citations: false,
