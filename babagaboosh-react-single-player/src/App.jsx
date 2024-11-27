@@ -18,7 +18,8 @@ const App = () => {
     const [input, setInput] = useState("");
     const [apiKeyPPLX, setApiKeyPPLX] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const messageListRef = useRef(null); 
+
+    const inputRef = useRef(null);
 
     const submitNewInput = async () => {
         if (input) {
@@ -117,15 +118,19 @@ const App = () => {
         getApiKey();
     }, []);
 
-    // need work...
     useEffect(() => {
-        const element = document.querySelector(".fpeuA-D");
-        console.log(element);
+        const elements = document.querySelectorAll(".fade-animation");
 
-        if (element) {
-            element.scrollTop = element.scrollHeight;
+        if (elements.length > 0) {
+            elements[elements.length - 1].scrollIntoView({
+                behavior: "smooth",
+            });
+
+            inputRef.current.focus()
+
+            // elements[elements.length - 1].style.border = "1px solid blue";
         }
-    }, [chatHistory]);
+    }, [chatHistory.length]);
 
     return (
         <>
@@ -162,6 +167,7 @@ const App = () => {
                                     onChange={(e) => inputChangeHandler(e)}
                                     onKeyDown={handleKeyPress}
                                     disabled={isLoading}
+                                    ref={inputRef}
                                 />
 
                                 <Button
