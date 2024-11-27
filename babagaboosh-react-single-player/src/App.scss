@@ -35,11 +35,12 @@
 }
 
 .hmKwhW {
-    max-width: 85% !important;
+    max-width: unset !important;
+    min-width: unset !important;
 }
 
 .gtIPtS {
-    width: 100%;
+    width: 90%;
 }
 
 pre {
@@ -50,4 +51,48 @@ ul,
 ol {
     padding-left: 14px;
     list-style-type: none;
+}
+
+[class^="tts-btn-"] {
+    border: 1px solid rgba(9, 0, 139, 0.788);
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 20px 0 20px;
+    border-radius: 10px;
+    transition: background-color 0.2s, opacity 0.2s;
+    background: url("./assets/images/Speaker_Icon.png") center/30px no-repeat,
+        rgba(0, 54, 161, 0.563);
+    opacity: 0.8;
+    cursor: pointer;
+
+    &:hover {
+        background: url("./assets/images/Speaker_Icon.png") center/30px
+                no-repeat,
+            rgba(0, 75, 180, 0.563);
+        opacity: 0.9;
+    }
+
+    &:active {
+        background: url("./assets/images/Speaker_Icon.png") center/30px
+                no-repeat,
+            rgba(0, 53, 160, 0.563);
+        opacity: 0.9;
+    }
+}
+
+.fade-animation {
+    display: flex;
+    align-items: stretch;
+
+    & > :first-child {
+        margin-top: auto;
+    }
+
+    & > :last-child {
+        align-self: center;
+    }
 }

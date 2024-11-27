@@ -11,6 +11,7 @@ import { chatHistory } from "./chatHistory";
 import { conversationMemory } from "./conversationMemory";
 import { createOptions } from "./createOptions";
 import { marked } from "marked";
+import useTTS from "./useTTS";
 
 const { TextArea } = Input;
 
@@ -18,6 +19,7 @@ const App = () => {
     const [input, setInput] = useState("");
     const [apiKeyPPLX, setApiKeyPPLX] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedMessageTTS, setSelectedMessageTTS] = useState();
 
     const inputRef = useRef(null);
 
@@ -129,10 +131,46 @@ const App = () => {
             });
 
             inputRef.current.focus();
+        }
 
-            // elements[elements.length - 1].style.border = "1px solid blue";
+        if (elements.length % 2 === 1) {
+            const newDiv = `
+                <div class="tts-btn-${elements.length}"></div>
+            `;
+
+            elements[elements.length - 1].insertAdjacentHTML(
+                "beforeend",
+                newDiv
+            );
+
+            document
+                .querySelector(`.tts-btn-${elements.length}`)
+                .addEventListener("click", () => {
+                    console.log("hi >>", elements.length);
+
+                    const selectedMessageBox =
+                        document.querySelectorAll(".sc-jlZhew")[
+                            elements.length - 1
+                        ];
+
+                    // console.log(
+                    //     "selectedMessageBox >>",
+                    //     selectedMessageBox
+                    // );
+
+                    const selectedMessage =
+                        selectedMessageBox.querySelector(
+                            ".sc-iGgWBj"
+                        ).textContent;
+
+                    console.log("selectedMessage >>", selectedMessage);
+
+                    setSelectedMessageTTS(selectedMessage);
+                });
         }
     }, [chatHistory.length]);
+
+    useTTS(selectedMessageTTS);
 
     return (
         <>
