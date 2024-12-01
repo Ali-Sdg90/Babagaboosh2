@@ -1,0 +1,102 @@
+.input-section {
+    padding: 12px;
+    background-color: rgb(243, 244, 246);
+}
+
+.daFsOe {
+    padding-right: 0 !important;
+}
+
+.chat-header {
+    font-size: 20px;
+    height: 50px;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.chat-list {
+    padding-top: 50px !important;
+}
+
+.sc-jlZhew:first-child {
+    margin-top: 60px !important;
+}
+
+.loading-token-spinner {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hmKwhW {
+    max-width: unset !important;
+    min-width: unset !important;
+}
+
+.gtIPtS {
+    width: 90%;
+}
+
+pre {
+    white-space: break-spaces;
+}
+
+ul,
+ol {
+    padding-left: 14px;
+    list-style-type: none;
+}
+
+[class^="tts-btn-"] {
+    border: 1px solid rgba(9, 0, 139, 0.788);
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 20px 0 20px;
+    border-radius: 10px;
+    transition: background-color 0.2s, opacity 0.2s;
+    background: url("./assets/images/Speaker_Icon.png") center/30px no-repeat,
+        rgba(0, 54, 161, 0.563);
+    opacity: 0.8;
+    cursor: pointer;
+
+    &:hover {
+        background: url("./assets/images/Speaker_Icon.png") center/30px
+                no-repeat,
+            rgba(0, 75, 180, 0.563);
+        opacity: 0.9;
+    }
+
+    &:active {
+        background: url("./assets/images/Speaker_Icon.png") center/30px
+                no-repeat,
+            rgba(0, 53, 160, 0.563);
+        opacity: 0.9;
+    }
+}
+
+.fade-animation {
+    display: flex;
+    align-items: stretch;
+
+    & > :first-child {
+        margin-top: auto;
+    }
+
+    & > :last-child {
+        align-self: center;
+    }
+}
+
+.next-btn{
+    margin: 10px;
+}
